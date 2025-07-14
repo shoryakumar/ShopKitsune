@@ -50,7 +50,9 @@ export default function LoyaltyDashboardPage() {
                   style={{ width: `${Math.min((data.points / 500) * 100, 100)}%` }}
                 />
               </div>
-              <div className="text-xs text-gray-500">{500 - data.points} pts to go!</div>
+              <div className="text-xs text-gray-500">
+                {data.points >= 500 ? "Reward unlocked! 🎉" : `${500 - data.points} pts to go!`}
+              </div>
             </div>
             <div className="mb-8 w-full">
               <h2 className="text-xl font-bold text-blue-700 mb-3">Badges</h2>

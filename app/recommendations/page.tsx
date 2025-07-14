@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 
 export default function RecommendationsPage() {
   const [loading, setLoading] = useState(false);
@@ -47,7 +48,7 @@ export default function RecommendationsPage() {
                     <span key={tag} className="px-2 py-1 bg-white text-blue-700 rounded text-xs font-medium border border-blue-200">{tag}</span>
                   ))}
                 </div>
-                <button className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-full font-semibold text-sm shadow hover:bg-blue-700 transition-all">Shop Now</button>
+                <Link href="/shop" className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-full font-semibold text-sm shadow hover:bg-blue-700 transition-all w-full text-center">Shop Now</Link>
               </div>
             ))}
           </div>

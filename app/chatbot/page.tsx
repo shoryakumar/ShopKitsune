@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 export default function ChatbotPage() {
   const [input, setInput] = useState("");
@@ -8,6 +8,7 @@ export default function ChatbotPage() {
     { from: "bot", text: "Hi! 👋 How can I help you shop today?" },
   ]);
   const [loading, setLoading] = useState(false);
+  const endOfMessagesRef = useRef<HTMLDivElement>(null);
 
   async function handleSend(e: React.FormEvent) {
     e.preventDefault();
@@ -32,14 +33,21 @@ export default function ChatbotPage() {
     }
   }
 
+  // Auto-scroll to the latest message
+  useEffect(() => {
+    if (endOfMessagesRef.current) {
+      endOfMessagesRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages, loading]);
+
   return (
     <main className="min-h-[80vh] flex flex-col items-center justify-center py-8 px-2 bg-gradient-to-br from-white via-blue-50 to-pink-50">
       <div className="w-full max-w-xl bg-white rounded-3xl shadow-2xl p-8 flex flex-col items-center border border-blue-100 animate-fadeInUp">
         <span className="text-4xl mb-2">🦊</span>
         <h1 className="text-3xl font-extrabold text-blue-700 mb-2 text-center">Shopping Assistant Chatbot</h1>
         <p className="mb-6 text-gray-600 text-center">Chat with our AI-powered shopping assistant for personalized help and recommendations.</p>
-        <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4 flex flex-col h-96 max-h-[32rem] w-full animate-fadeInUp">
-          <div className="flex-1 overflow-y-auto mb-4 space-y-3">
+        <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4 flex flex-col h-96 max-h-[32rem] w-full animate-fadeInUp overflow-y-auto">
+          <div className="flex-1 mb-4 space-y-3">
             {messages.map((msg, idx) => (
               <div key={idx} className={`flex ${msg.from === "user" ? "justify-end" : "justify-start"}`}>
                 <div className={`px-4 py-2 rounded-2xl max-w-xs text-base shadow-md animate-fadeInUp ${msg.from === "user" ? "bg-blue-600 text-white rounded-br-none" : "bg-white border border-blue-100 text-gray-800 rounded-bl-none"}`} style={{ animationDelay: `${idx * 100}ms` }}>
@@ -49,10 +57,12 @@ export default function ChatbotPage() {
             ))}
             {loading && (
               <div className="flex justify-start">
-                <div className="px-4 py-2 rounded-2xl max-w-xs text-base shadow-md bg-white border border-blue-100 text-gray-800 rounded-bl-none animate-fadeInUp opacity-60">...
+                <div className="px-4 py-2 rounded-2xl max-w-xs text-base shadow-md bg-white border border-blue-100 text-gray-800 rounded-bl-none animate-fadeInUp opacity-60 flex items-center gap-2">
+                  <TypingIndicator />
                 </div>
               </div>
             )}
+            <div ref={endOfMessagesRef} />
           </div>
           <form className="flex items-center gap-2" onSubmit={handleSend}>
             <input
@@ -71,10 +81,20 @@ export default function ChatbotPage() {
               Send
             </button>
           </form>
-          <div className="text-xs text-gray-400 mt-2">Live chat powered by FastAPI backend!</div>
+          <div className="text-xs text-gray-400 mt-2">Live chat powered by Gemini!</div>
         </div>
       </div>
     </main>
+  );
+}
+
+function TypingIndicator() {
+  return (
+    <span className="flex gap-1">
+      <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></span>
+      <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "100ms" }}></span>
+      <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "200ms" }}></span>
+    </span>
   );
 }
 
