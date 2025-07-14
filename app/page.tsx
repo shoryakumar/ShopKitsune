@@ -1,103 +1,93 @@
+"use client";
+
+import React from "react";
+import Link from "next/link";
 import Image from "next/image";
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+const features = [
+  {
+    title: "Style Profiling",
+    description:
+      "Upload an image or describe your style. Our AI analyzes your preferences for personalized fashion recommendations.",
+    icon: "/file.svg",
+  },
+  {
+    title: "AI Recommendations",
+    description:
+      "Receive curated outfit suggestions powered by advanced machine learning and collaborative filtering.",
+    icon: "/next.svg",
+  },
+  {
+    title: "Virtual Try-On",
+    description:
+      "Try on clothes virtually in your browser using AR.js and your device camera.",
+    icon: "/window.svg",
+  },
+  {
+    title: "Shopping Chatbot",
+    description:
+      "Chat with our AI assistant for instant help, advice, and product discovery.",
+    icon: "/globe.svg",
+  },
+  {
+    title: "Loyalty Program",
+    description:
+      "Earn points, badges, and rewards for purchases, reviews, and referrals. Track your progress on your dashboard.",
+    icon: "/vercel.svg",
+  },
+];
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+export default function HomePage() {
+  return (
+    <main className="min-h-screen flex flex-col items-center justify-start py-0 px-0 w-full">
+      {/* Hero Section */}
+      <section className="w-full bg-gradient-to-br from-blue-500 via-indigo-400 to-pink-300 py-16 px-4 flex flex-col items-center text-center relative overflow-hidden shadow-lg">
+        <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('/globe.svg')] bg-no-repeat bg-center bg-contain pointer-events-none" />
+        <span className="text-6xl md:text-7xl mb-4 block">🦊</span>
+        <span className="inline-block bg-white/80 text-blue-700 font-bold px-4 py-1 rounded-full text-xs mb-4 shadow">Walmart Hackathon 2025</span>
+        <h1 className="text-4xl md:text-6xl font-extrabold text-white drop-shadow mb-4">ShopKitsune</h1>
+        <p className="text-lg md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto font-medium drop-shadow">
+          AI-powered shopping assistant with fashion recommendations, virtual try-on, and a gamified loyalty program for long-term customer engagement.
+        </p>
+        <Link href="/style-profile" className="inline-block px-10 py-4 bg-white text-blue-700 text-lg font-bold rounded-full shadow-lg hover:bg-blue-700 hover:text-white transition-all duration-200">
+          Get Started
+        </Link>
+      </section>
+
+      {/* Features Section */}
+      <section className="max-w-5xl w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 py-16 px-4 -mt-12 z-10">
+        {features.map((feature, i) => (
+          <FeatureCard
+            key={feature.title}
+            title={feature.title}
+            description={feature.description}
+            icon={feature.icon}
+            delay={i * 100}
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        ))}
+      </section>
+    </main>
+  );
+}
+
+function FeatureCard({ title, description, icon, delay }: { title: string; description: string; icon: string; delay: number }) {
+  return (
+    <div
+      className="bg-white rounded-3xl shadow-xl p-8 flex flex-col items-start hover:scale-105 hover:shadow-2xl transition-all duration-300 border border-gray-100 group cursor-pointer"
+      style={{ animation: `fadeInUp 0.7s cubic-bezier(.23,1.01,.32,1) ${delay}ms both` }}
+    >
+      <div className="w-14 h-14 mb-5 flex items-center justify-center bg-blue-100 rounded-full group-hover:bg-blue-600 group-hover:scale-110 transition-all">
+        <Image src={icon} alt="" width={36} height={36} className="group-hover:invert transition" />
+      </div>
+      <h2 className="text-2xl font-bold text-blue-700 mb-2 group-hover:text-blue-600 transition">{title}</h2>
+      <p className="text-gray-600 group-hover:text-gray-800 transition">{description}</p>
     </div>
   );
+}
+
+// Add fadeInUp animation
+if (typeof window !== "undefined") {
+  const style = document.createElement("style");
+  style.innerHTML = `@keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }`;
+  document.head.appendChild(style);
 }
